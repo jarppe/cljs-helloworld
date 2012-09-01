@@ -7,20 +7,26 @@
 (defn arc [context x y r s e ccw] (.arc context x y r (* Math/PI s) (* Math/PI e) ccw))
 (defn split [context] (doto context (.stroke) (.beginPath)))
 
-(def figure {\h [[arc 0 0 100 0.35 1.65 true] [split] [arc 0 0 100 1.35 0.65 true] [move -100 0] [line 100 0]]
-             \e [[arc 0 0 100 1.75 0.25 true] [move -100 0] [line 50 0]]
-             \l [[arc 0 0 100 1.3 0.25 true]]
-             \o [[arc 0 0 100 0 2 true]]
-             \w [[arc 0 0 100 1.35 0.65 true] [line 0 50] [arc 0 0 100 0.35 1.65 true]]
-             \r [[arc -30 -30 70 0.7 1.3 true] [move -70 -87] [line -70 100] [move -15 37] [line 30 100]]
-             \d [[arc 0 0 100 0.7 1.3 true] [move -30 -95] [line -30 95]]})
+(def figure {\h [1 0 0 0 0
+                 1 0 0 0 0
+                 1 0 0 0 0
+                 1 0 1 1 0
+                 1 1 0 0 1
+                 1 0 0 0 1
+                 1 0 0 0 1]})
 
-(def unknown [[arc 0 0 40 0 2 true]])
+(def unknown [0 1 1 1 0
+              1 0 0 0 1
+              0 0 0 0 1
+              0 0 0 1 0
+              0 0 1 0 0
+              0 0 0 0 0
+              0 0 1 0 0])
 
-(defn draw-figure [context [[op & args] & r]]
-  (apply op context args)
-  (if r
-    (draw-figure context r)))
+(defn draw-figure [context pixels]
+  (dorun
+    (for [y (range 7) x (range 5)]
+      (arc context (* x 25) (* y 25) 20 0 2 true))))
 
 (defn draw-line [context [c & r]]
   (doto context
