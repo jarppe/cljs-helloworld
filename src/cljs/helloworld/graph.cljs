@@ -4,9 +4,9 @@
             [clojure.string :as s]))
 
 (defn make-fill [context]
-  (doto (.createRadialGradient context 0 0 0 0 0 20)
-    (.addColorStop 0 "rgba(255,255,0,255)")
-    (.addColorStop 1 "rgba(200,200,0,0)")))
+  (doto (.createRadialGradient context 0 0 0 0 0 17)
+    (.addColorStop 0 "rgba(0,255,0,255)")
+    (.addColorStop 1 "rgba(0,255,0,0)")))
 
 (defn draw-figure [context fx fy pixels]
   (dorun
