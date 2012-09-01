@@ -10,16 +10,15 @@ You need [lein](https://github.com/technomancy/leiningen), a browser with HTML5 
 
 To build type:
 
-	$ lein deps
-	$ lein cljsbuild auto
+	$ lein cljsbuild once
 
-The last line starts ClojureScript compiler that compiles ClojureScript sources to Javascript every time you change any of the sources. For more information see [lein-cljsbuild](https://github.com/emezeske/lein-cljsbuild).
+That starts ClojureScript compiler that compiles ClojureScript sources to Javascript. If you change the `once` to `auto` then the compiler will keep on running and execute the compilation every time you change any of the source files. For more information see [lein-cljsbuild](https://github.com/emezeske/lein-cljsbuild).
 
-Compilation is ready when you see a line like this:
+Build is ready when you see a line like this:
 
 	Successfully compiled "resources/public/hello.js" in 1.221249 seconds.
 
-Open the file `./resources/public/hello.html` in your browser. If you are on Mac you can just type:
+Open the file `./resources/public/hello.html` in your browser. If you are on a Mac you can just type:
 
 	$ open ./resources/public/hello.html
 
