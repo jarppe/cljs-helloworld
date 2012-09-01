@@ -17,6 +17,9 @@
   (set! (.-lineWidth context) width)
   context)
 
+(defn set-fill! [context style]
+  (set! (.-fillStyle context) style))
+
 (defn get-context []
   (let [context (.getContext (get-canvas) "2d")]
     (set! (.-lineCap context) "round")

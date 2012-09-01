@@ -1,52 +1,32 @@
 (ns helloworld.graph
   (:require [helloworld.canvas :as c]
+            [helloworld.figure :as f]
             [clojure.string :as s]))
 
-(defn move [context x y] (.moveTo context x y))
-(defn line [context x y] (.lineTo context x y))
-(defn arc [context x y r s e ccw] (.arc context x y r (* Math/PI s) (* Math/PI e) ccw))
-(defn split [context] (doto context (.stroke) (.beginPath)))
+(defn make-fill [context]
+  (doto (.createRadialGradient context 0 0 0 0 0 17)
+    (.addColorStop 0 "rgba(0,255,0,255)")
+    (.addColorStop 1 "rgba(0,255,0,0)")))
 
-(def figure {\h [1 0 0 0 0
-                 1 0 0 0 0
-                 1 0 0 0 0
-                 1 0 1 1 0
-                 1 1 0 0 1
-                 1 0 0 0 1
-                 1 0 0 0 1]})
-
-(def unknown [0 1 1 1 0
-              1 0 0 0 1
-              0 0 0 0 1
-              0 0 0 1 0
-              0 0 1 0 0
-              0 0 0 0 0
-              0 0 1 0 0])
-
-(defn draw-figure [context pixels]
+(defn draw-figure [context fx fy pixels]
   (dorun
-    (for [y (range 7) x (range 5)]
-      (arc context (* x 25) (* y 25) 20 0 2 true))))
+    (for [y (range 8) x (range 5) :when (= (get pixels (+ x (* y 5))) 1)]
+      (do
+        (.setTransform context 1 0 0 1 (+ fx (* x 20)) (+ fy (* y 20)))
+        (c/set-fill! context (make-fill context))
+        (.fillRect context -20 -20 40 40)))))
 
-(defn draw-line [context [c & r]]
-  (doto context
-    (.beginPath)
-    (draw-figure (get figure c unknown))
-    (.stroke))
+(defn draw-line [context x y [c & r]]
+  (draw-figure context x y (f/get-figure c))
   (when r
-    (.translate context 250 0)
-    (draw-line context r)))
+    (draw-line context (+ x 130) y r)))
 
 (defn draw-text [context x y [line & r]]
-  (doto context
-    (.setTransform 1 0 0 1 x y)
-    (draw-line line))
+  (draw-line context x y line)
   (when r
-    (draw-text context x (+ y 250) r)))
+    (draw-text context x (+ y 180) r)))
 
-(defn ^:export draw [text]
+(defn ^:export draw [x y text]
   (let [c (c/get-context)]
-    (c/set-line! c "#005000" 10)
-    (draw-text c 150 150 (s/split-lines text))
-    (c/set-line! c "#00FF00" 2)
-    (draw-text c 150 150 (s/split-lines text))))
+    (c/set-fill! c "#005000")
+    (draw-text c x y (s/split-lines text))))
