@@ -28,4 +28,4 @@ The HTML is just a simple page that creates a HTML5 canvas with the same size as
 ## License
 
 Copyright © 2012 Jarppe Länsiö
-Distributed under the Eclipse Public License, the same as Clojure.
+- Distributed under the Eclipse Public License, the same as Clojure.
