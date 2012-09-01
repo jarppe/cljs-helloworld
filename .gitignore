@@ -4,3 +4,7 @@ pom.xml
 /classes/
 .lein-*
 target
+.classpath
+.project
+.settings
+
