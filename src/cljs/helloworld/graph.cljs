@@ -19,7 +19,7 @@
 (defn draw-line [context x y [c & r]]
   (draw-figure context x y (f/get-figure c))
   (when r
-    (draw-line context (+ x 130) y r)))
+    (draw-line context (+ x 120) y r)))
 
 (defn draw-text [context x y [line & r]]
   (draw-line context x y line)
