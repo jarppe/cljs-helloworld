@@ -12,9 +12,14 @@
     (set! js/heightW (.-height canvas))
     canvas))
 
+(defn set-line! [context style width]
+  (set! (.-strokeStyle context) style)
+  (set! (.-lineWidth context) width)
+  context)
+
 (defn get-context []
   (let [context (.getContext (get-canvas) "2d")]
-    (set! (.-strokeStyle context) "#00FF00")
-    (set! (.-lineWidth context) 2)
-    (set! (.-lineCap context) "butt")
+    (set! (.-lineCap context) "round")
+    (set-line! context "#00FF00" 2)
     context))
+
