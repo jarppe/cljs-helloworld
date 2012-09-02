@@ -1,4 +1,4 @@
-(defproject helloworld "0.1.0-SNAPSHOT"
+(defproject cljs-helloworld "0.1.0-SNAPSHOT"
   :description "HelloWorld - with ClojureScript"
   :plugins [[lein-cljsbuild "0.2.7"]
             [lein-pedantic "0.0.2"]]
